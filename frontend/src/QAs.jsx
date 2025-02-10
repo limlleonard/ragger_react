@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 const url0="http://127.0.0.1:5000/"
-const QAs=()=>{
+const QAs=({onChangePage})=>{
 	const [apiKey, setApiKey] = useState("");
 	const [question, setQuestion] = useState("");
 	const [qaList, setQaList] = useState([
@@ -59,6 +59,7 @@ const QAs=()=>{
 				}
 				setQaList([...qaList, { question, answer: data.answer }]);
 				setQuestion("");
+				onChangePage(data.pagenr);
 			} catch (error) {
 				console.error("Error:", error);
 				alert(error.message);
@@ -85,7 +86,7 @@ const QAs=()=>{
 			</React.Fragment>
 		))}
 	</div>
-	<form className="textfield" onSubmit={askQuestion}>
+	<form className={"textfield bottom-right"} onSubmit={askQuestion}>
 		<input
 		type="text"
 		id="inputFrage"

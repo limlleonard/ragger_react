@@ -22,6 +22,7 @@ dir_pdf = 'pdf' # der Ordner für PDF Dateien
 os.makedirs(dir_pdf, exist_ok=True)
 agent1=Agent(dir1=dir_pdf)
 
+# host UI from react
 dist_folder = os.path.join(os.getcwd(), "..", "frontend", "dist")
 @app.route("/",defaults={"filename":""})
 @app.route("/<path:filename>")
@@ -110,3 +111,6 @@ def serve_pdf(filename):
 
 if __name__ == "__main__":
     app.run(debug=True)  # host="127.0.0.6", port=6666,
+
+# file system, use temp_file instead of saving pdf
+# pdf scroll and highlight

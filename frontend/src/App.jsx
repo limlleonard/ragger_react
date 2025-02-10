@@ -6,7 +6,7 @@ import QAs from "./QAs";
 
 export default function App() {
 	const [selectedFile, setSelectedFile] = useState('');
-	const [pageNr, setPageNr] = useState('');
+	const [pageNr, setPageNr] = useState(0);
 
 	const handleSelectPDF = (file) => {
 		setSelectedFile(file);
@@ -27,7 +27,7 @@ export default function App() {
 			</div>
 			<div className="ctn-r">
 				<FileManager onSelectPDF={handleSelectPDF} onChangePage={handleChangePage} />
-				<QAs />
+				<QAs onChangePage={handleChangePage} />
 			</div>
 		</div>
 		</div>

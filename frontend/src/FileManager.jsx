@@ -71,7 +71,6 @@ const FileManager=({onSelectPDF, onChangePage})=>{
 	};
 	const test1=()=>{
 		onChangePage(2);
-		console.log('test1');
 	}
   
     return (
