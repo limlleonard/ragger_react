@@ -6,11 +6,6 @@ from flask_cors import CORS # pip install flask-cors
 import mimetypes
 from model import Agent
 
-# python -m PyInstaller app.spec
-# https://github.com/openai/tiktoken/issues/80
-# python -m PyInstaller -F --add-data "templates;templates" --add-data "static;static" --add-data "at.py;." --add-data "save_url.py;." app.py
-# added_files = [('templates', '.'),('static', '.'),('at.py', '.'), ('save_url.py','.')]
-
 app = Flask(__name__)
 CORS(app)
 app.secret_key = "geheimniszahl"
@@ -19,25 +14,17 @@ mimetypes.add_type('application/javascript', '.mjs')
 app.jinja_env.filters['zip'] = zip
 
 dir_pdf = 'pdf' # der Ordner für PDF Dateien
-os.makedirs(dir_pdf, exist_ok=True)
+os.makedirs(os.path.join(os.path.dirname(__file__), dir_pdf), exist_ok=True)
 agent1=Agent(dir1=dir_pdf)
 
 # host UI from react
-dist_folder = os.path.join(os.getcwd(), "..", "frontend", "dist")
+dist_folder = os.path.join(os.path.dirname(__file__), "..", "frontend", "dist")
 @app.route("/",defaults={"filename":""})
 @app.route("/<path:filename>")
 def index(filename):
     if not filename:
         filename = "index.html"
     return send_from_directory(dist_folder,filename)
-
-# @app.route("/", methods=["GET", "POST"])
-# def index():
-#     files = os.listdir(dir_pdf)
-#     return render_template(
-#         "index.html",
-#         files=files
-#     )
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -103,14 +90,14 @@ def frag():
             'text':node.text})
     return jsonify({"answer": answer})
 
-PDF_FOLDER = os.path.join(os.getcwd(), dir_pdf)
-@app.route('/pdf/<filename>')
-def serve_pdf(filename):
-    """pdf hosten, sonst kann pdfjs das pdf nicht erkennen"""
-    return send_from_directory(PDF_FOLDER, filename, mimetype='application/javascript')
+# PDF_FOLDER = os.path.join(os.getcwd(), dir_pdf)
+# @app.route('/pdf/<filename>')
+# def serve_pdf(filename):
+#     """pdf hosten, sonst kann pdfjs das pdf nicht erkennen"""
+#     return send_from_directory(PDF_FOLDER, filename, mimetype='application/javascript')
 
 if __name__ == "__main__":
     app.run(debug=True)  # host="127.0.0.6", port=6666,
 
 # file system, use temp_file instead of saving pdf
-# pdf scroll and highlight
+# pdf highlight

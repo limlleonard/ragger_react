@@ -23,13 +23,17 @@ cd ragger_react
 ```
 Create and activate a virtual environment (recommanded)
 ```
-python -m venv venv_rag
-source venv_rag/bin/activate # macOS/linux
-venv_rag\Scripts\Activate # PowerShell
+python -m venv venv
+source venv/bin/activate # macOS/linux
+venv\Scripts\Activate # PowerShell
 ```
 Install requirements
 ```
 pip install -r requirements.txt
+cd frontend
+npm install
+npm run build
+cd ..
 ```
 Start the programm
 ```
